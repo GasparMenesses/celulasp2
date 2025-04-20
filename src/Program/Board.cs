@@ -3,28 +3,60 @@ using System.IO;
 
 namespace Program
 {
-    
-// Clase 2: Convierte ese contenido en una matriz booleana
     public class Board
     {
-        public static bool[,] ImportFromLines(string[] lines)
-        {
-            bool[,] board = new bool[lines.Length, lines[0].Length];
+        // Cantidad de columnas y filas del tablero
+        private readonly int columns;
+        private readonly int rows;
 
-            for (int i = 0; i < lines.Length; i++)
+        // Tamaño de cada celda en píxeles
+        public readonly int CellSize;
+
+        // Matriz que representa el estado de cada celda (viva o muerta)
+        public bool[,] Cells;
+
+        // Generador de números aleatorios
+        private readonly Random rand = new Random();
+
+        // Propiedades que calculan automáticamente los valores derivados
+        public int Columns => columns;
+        public int Rows => rows;
+        public int Width => Columns * CellSize;  // Ancho total del tablero en píxeles
+        public int Height => Rows * CellSize;    // Alto total del tablero en píxeles
+
+        // Constructor del tablero
+        // Recibe el tamaño en píxeles, el tamaño de cada celda y la densidad inicial de células vivas
+        public Board(int width, int height, int cellSize, double liveDensity = 0.1)
+        {
+            CellSize = cellSize;
+            columns = width / cellSize;  // Calcula cuántas columnas caben en el ancho
+            rows = height / cellSize;    // Calcula cuántas filas caben en el alto
+
+            // Inicializa la matriz de celdas como falsa (todas muertas)
+            Cells = new bool[columns, rows];
+
+            // Genera una configuración aleatoria de células vivas
+            Randomize(liveDensity);
+        }
+
+        // Método que asigna aleatoriamente células vivas según la densidad especificada
+        public void Randomize(double liveDensity)
+        {
+            for (int x = 0; x < columns; x++)
             {
-                for (int j = 0; j < lines[0].Length; j++)
+                for (int y = 0; y < rows; y++)
                 {
-                    if (lines[i][j] == '1')
-                    {
-                        board[i, j] = true;
-                    }
+                    // Cada celda tiene una probabilidad "liveDensity" de estar viva
+                    Cells[x, y] = rand.NextDouble() < liveDensity;
                 }
             }
-            
-            return board;
         }
+
+        // Avanza a la siguiente generación aplicando las reglas del Juego de la Vida
+        public void Advance()
+        {
+            // Usa la clase Motor para generar la nueva generación de células
+            Cells = Motor.GenerateNewGeneration(Cells); 
+        } 
     }
 }
- 
-
