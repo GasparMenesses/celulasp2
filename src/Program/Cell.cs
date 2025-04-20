@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ucu.Poo.GameOfLife
+namespace Program  
 {
     public class cell
     {

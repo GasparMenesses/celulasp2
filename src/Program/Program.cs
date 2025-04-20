@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Ucu.Poo.GameOfLife
+namespace Program
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             
         }
     }
 }
+
