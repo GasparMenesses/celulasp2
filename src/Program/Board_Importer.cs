@@ -7,7 +7,7 @@ namespace Program
     {
         public static bool[,] ImportFromFile(string url)//url es la direccion del archivo .txt
         {
-            string[] content = File.ReadAllText(".\\board.txt").Replace("\r", "").Split('\n');//Se reemplaza \r ya que de no ser asi no todos tendran la misma cantidad de elementos
+            string[] content = File.ReadAllText(url).Replace("\r", "").Split('\n');//Se reemplaza \r ya que de no ser asi no todos tendran la misma cantidad de elementos
             bool[,] board = new bool[content.Length, content[0].Length];//Creo una matriz de las dimensiones del archivo .txt con valores booleanos en false por defecto
             for (int i = 0; i < content.Length; i++)
             {
