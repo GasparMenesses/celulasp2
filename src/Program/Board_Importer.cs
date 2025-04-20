@@ -19,7 +19,6 @@ namespace Program
                     }
                 }
             }
-
             return board;
         }
     }
