@@ -4,28 +4,24 @@ using System.Linq;
 
 namespace Program  
 {
-    public class cell
+    public class Cell
     {
         public bool IsAlive;
-        public readonly List<cell> neighbor = new List<cell>();
+        public readonly List<Cell> Neighbors = new List<Cell>();
         private bool IsAliveNext;
 
         public void DetermineNextLiveState()
         {
-            int liveNeighbors = neighbor.Where(x => x.IsAlive).Count();
+            int liveNeighbors = Neighbors.Count(x => x.IsAlive);
 
-            if (IsAlive)
-                IsAliveNext = liveNeighbors == 2 || liveNeighbors == 3;
-            else
-            {
-                IsAliveNext = liveNeighbors == 3;
-            }
-            
+            IsAliveNext = IsAlive
+                ? (liveNeighbors == 2 || liveNeighbors == 3)
+                : (liveNeighbors == 3);
         }
 
         public void Advance()
-        { 
-            IsAlive=IsAliveNext;  
+        {
+            IsAlive = IsAliveNext;
         }
     }
 }
