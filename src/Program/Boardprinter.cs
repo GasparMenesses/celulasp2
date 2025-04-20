@@ -31,8 +31,6 @@ namespace Program
                     s.Append("\n");
                 }
                 Console.WriteLine(s.ToString());
-
-                // Aquí podrías calcular la nueva generación con Motor.GenerateNewGeneration(b);
                 Thread.Sleep(300);
             }
         }

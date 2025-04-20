@@ -58,19 +58,18 @@ namespace Program
                     int bottom = (y < Rows - 1) ? y + 1 : 0;
 
                     var cell = Cells[x, y];
-                    cell.neighbors.Add(Cells[left, top]);
-                    cell.neighbors.Add(Cells[x, top]);
-                    cell.neighbors.Add(Cells[right, top]);
-                    cell.neighbors.Add(Cells[left, y]);
-                    cell.neighbors.Add(Cells[right, y]);
-                    cell.neighbors.Add(Cells[left, bottom]);
-                    cell.neighbors.Add(Cells[x, bottom]);
-                    cell.neighbors.Add(Cells[right, bottom]);
+                    cell.Neighbors.Add(Cells[left, top]);
+                    cell.Neighbors.Add(Cells[x, top]);
+                    cell.Neighbors.Add(Cells[right, top]);
+                    cell.Neighbors.Add(Cells[left, y]);
+                    cell.Neighbors.Add(Cells[right, y]);
+                    cell.Neighbors.Add(Cells[left, bottom]);
+                    cell.Neighbors.Add(Cells[x, bottom]);
+                    cell.Neighbors.Add(Cells[right, bottom]);
                 }
             }
         }
-
-
+        
     }
 
 }
