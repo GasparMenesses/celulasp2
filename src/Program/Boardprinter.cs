@@ -8,28 +8,30 @@
 using System;
 using System.Text;
 using System.Threading;
-namespace Program        
+
+namespace Program
 {
     public class BoardPrinter
     {
-        
+
         // Método que se encarga de imprimir el tablero. Recibe como parámetro una matriz bidimensional de booleanos (b)
         // donde cada valor puede ser true (célula viva) o false (célula muerta).
-        public static void Print(bool[,] b)  
+        public static void Print(bool[,] b)
         {
             int height = b.GetLength(0); // Filas (Y)
             int width = b.GetLength(1);  // Columnas (X)
-            while (true)  // bucle infinito para que nunca deje de imprimir
-            {
+
+            
                 Console.Clear(); // limpio la consola para que el estado anterior desaparezca
+
                 StringBuilder s = new StringBuilder(); // construye de manera eficiente una cadena de texto que representará el tablero
-                for (int y = 0; y < height; y++) 
-                {                                       
+                for (int y = 0; y < height; y++)
+                {
                     for (int x = 0; x < width; x++)     // recorro cada elemento de la fila iterando columnas
                     {
-                        if (b[x, y]) // condicional para la posicion de la célula
+                        if (b[y, x]) // condicional para la posición de la célula
                         {
-                            s.Append("|X|");   // si  está viva
+                            s.Append("|X|");   // si está viva
                         }
                         else
                         {
@@ -39,10 +41,9 @@ namespace Program
 
                     s.Append("\n"); // salto de linea al final de cada fila (después de recorrer todas las columnas de una fila)
                 }
-
-                Console.WriteLine(s.ToString());  // imprimo el trablero de cada generación
+                Console.WriteLine(s.ToString());  // imprimo el tablero de cada generación
                 Thread.Sleep(300); // espero 300 milisegundos para un mejor efecto visual
-            } 
+            
         }
     }
 }

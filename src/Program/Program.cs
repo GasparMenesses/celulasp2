@@ -7,7 +7,14 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            BoardImporter.ImportFromFile( ".\\board.txt");
+            bool[,] jorge = BoardImporter.ImportFromFile( ".\\board.txt");
+            bool[,] a = jorge;
+            while (true)
+            {
+                a = Motor.GenerateNewGeneration(a);
+                BoardPrinter.Print(a);
+            }
+            
         }
     }
 }
