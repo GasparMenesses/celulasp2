@@ -4,74 +4,60 @@ using System.IO;
 namespace Program
 {
     public class Board
-    {   // Cantidad de columnas y filas de la cuadrícula
+    {
+        // Cantidad de columnas y filas del tablero
         private readonly int columns;
         private readonly int rows;
-        // Matriz de células que forman el tablero
-        public readonly Cell[,] Cells;
+
+        // Tamaño de cada celda en píxeles
         public readonly int CellSize;
 
-        public int Columns => columns;
-        public int Rows => rows; 
-        public int Width => Columns * CellSize;
-        public int Height => Rows * CellSize;
+        // Matriz que representa el estado de cada celda (viva o muerta)
+        public bool[,] Cells;
 
+        // Generador de números aleatorios
         private readonly Random rand = new Random();
 
-        public Board(int width, int height, int cellSize, double liveDensity = 0.1)     // Constructor: inicializa el tablero con las dimensiones y densidad de células vivas
+        // Propiedades que calculan automáticamente los valores derivados
+        public int Columns => columns;
+        public int Rows => rows;
+        public int Width => Columns * CellSize;  // Ancho total del tablero en píxeles
+        public int Height => Rows * CellSize;    // Alto total del tablero en píxeles
+
+        // Constructor del tablero
+        // Recibe el tamaño en píxeles, el tamaño de cada celda y la densidad inicial de células vivas
+        public Board(int width, int height, int cellSize, double liveDensity = 0.1)
         {
             CellSize = cellSize;
-            columns = width / cellSize;
-            rows = height / cellSize;
-            // Crear la matriz de células
-            Cells = new Cell[columns, rows];
-            for (int x = 0; x < columns; x++)
-            for (int y = 0; y < rows; y++)
-                Cells[x, y] = new Cell();
+            columns = width / cellSize;  // Calcula cuántas columnas caben en el ancho
+            rows = height / cellSize;    // Calcula cuántas filas caben en el alto
 
+            // Inicializa la matriz de celdas como falsa (todas muertas)
+            Cells = new bool[columns, rows];
 
+            // Genera una configuración aleatoria de células vivas
             Randomize(liveDensity);
-            ConnectNeighbors(); // Conecta cada célula con sus vecinas (esto es importante para que funcione correctamente)
         }
 
-        public void Randomize(double liveDensity)   // Asigna aleatoriamente células vivas según la densidad especificada
+        // Método que asigna aleatoriamente células vivas según la densidad especificada
+        public void Randomize(double liveDensity)
         {
-            foreach (var cell in Cells)
-                cell.IsAlive = rand.NextDouble() < liveDensity;
-        }
-
-        public void Advance()
-        {
-            foreach (var cell in Cells)
-                cell.DetermineNextLiveState();
-            foreach (var cell in Cells)
-                cell.Advance();
-        }
-
-        private void ConnectNeighbors()  // Conecta cada célula con sus 8 vecinas
-        {
-            for (int x = 0; x < Columns; x++)
+            for (int x = 0; x < columns; x++)
             {
-                for (int y = 0; y < Rows; y++)
+                for (int y = 0; y < rows; y++)
                 {
-                    int left = (x > 0) ? x - 1 : Columns - 1;
-                    int right = (x < Columns - 1) ? x + 1 : 0;
-                    int top = (y > 0) ? y - 1 : Rows - 1;
-                    int bottom = (y < Rows - 1) ? y + 1 : 0;
-                    // Agrega las 8 células vecinas (arriba, abajo, izquierda, derecha y diagonales)
-                    var cell = Cells[x, y];
-                    cell.Neighbors.Add(Cells[left, top]);
-                    cell.Neighbors.Add(Cells[x, top]);
-                    cell.Neighbors.Add(Cells[right, top]);
-                    cell.Neighbors.Add(Cells[left, y]);
-                    cell.Neighbors.Add(Cells[right, y]);
-                    cell.Neighbors.Add(Cells[left, bottom]);
-                    cell.Neighbors.Add(Cells[x, bottom]);
-                    cell.Neighbors.Add(Cells[right, bottom]);
+                    // Cada celda tiene una probabilidad "liveDensity" de estar viva
+                    Cells[x, y] = rand.NextDouble() < liveDensity;
                 }
             }
         }
-        
+
+        // Avanza a la siguiente generación aplicando las reglas del Juego de la Vida
+        public void Advance()
+        {
+            // Usa la clase Motor para generar la nueva generación de células
+            Cells = Motor.GenerateNewGeneration(Cells);
+        }
     }
 
 }
