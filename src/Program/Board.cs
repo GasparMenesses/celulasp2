@@ -12,7 +12,7 @@ namespace Program
         public readonly int CellSize;
 
         public int Columns => columns;
-        public int Rows => rows;
+        public int Rows => rows; 
         public int Width => Columns * CellSize;
         public int Height => Rows * CellSize;
 
