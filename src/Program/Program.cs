@@ -1,20 +1,16 @@
-﻿using System;
-using System.IO;
-
+﻿
 namespace Program
 {
     class Program
     {
         static void Main(string[] args)
         {
-            bool[,] jorge = BoardImporter.ImportFromFile( ".\\board.txt");
-            bool[,] a = jorge;
+            Library.BoardImporter.ImportFromFile(".\\board.txt");
             while (true)
             {
-                a = Motor.GenerateNewGeneration(a);
-                BoardPrinter.Print(a);
+                Library.Motor.GenerateNewGeneration();
+                Library.BoardPrinter.Print();
             }
-            
         }
     }
 }

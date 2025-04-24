@@ -9,18 +9,17 @@ using System;
 using System.Text;
 using System.Threading;
 
-namespace Program
+namespace Library
 {
     public class BoardPrinter
     {
 
         // Método que se encarga de imprimir el tablero. Recibe como parámetro una matriz bidimensional de booleanos (b)
         // donde cada valor puede ser true (célula viva) o false (célula muerta).
-        public static void Print(bool[,] b)
+        public static void Print()
         {
-            int height = b.GetLength(0); // Filas (Y)
-            int width = b.GetLength(1);  // Columnas (X)
-
+            int height = Board.GetLength0(); // Filas (Y)
+            int width = Board.GetLength1(); // Columnas (X)
             
                 Console.Clear(); // limpio la consola para que el estado anterior desaparezca
 
@@ -29,7 +28,7 @@ namespace Program
                 {
                     for (int x = 0; x < width; x++)     // recorro cada elemento de la fila iterando columnas
                     {
-                        if (b[y, x]) // condicional para la posición de la célula
+                        if (Board.IsAlive(y, x)) // condicional para la posición de la célula
                         {
                             s.Append("|X|");   // si está viva
                         }
